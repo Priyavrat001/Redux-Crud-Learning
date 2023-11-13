@@ -1,43 +1,48 @@
 import React, { useState } from 'react'
 import {useDispatch} from 'react-redux'
 import { createUser } from '../features/userDatailsSlice'
+import { useNavigate } from 'react-router-dom'
 
 const Form = () => {
-    const [user, setUser] = useState({})
+    const [users, setUsers] = useState({})
+    const navigate = useNavigate()
     const dispatch = useDispatch()
+    
     const handleChange = (e)=>{
-        setUser({...user, [e.target.name]: e.target.value})
-        console.log(user);
+        setUsers({...users, [e.target.name]: e.target.value})
+        console.log(users);
     }
     const handleSubmit = (e)=>{
         e.preventDefault()
-        console.log("user...", user)
-        dispatch(createUser(user))
+        console.log("users...", users)
+        dispatch(createUser(users))
+        navigate('/read')
     }
     return (
         <>
             <form className='w-50 mx-auto bg-gray' onSubmit={handleSubmit}>
+            <h2 className='my-5'>Enter your data to craete a user.</h2>
                 <div className="mb-3">
-                    <label for="exampleInputEmail1" className="form-label">Name</label>
+                    <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
                     <input onChange={handleChange} type="name"  name='name' className="form-control" id="name" aria-describedby="emailHelp" />
                 </div>
                 <div className="mb-3">
-                    <label for="exampleInputPassword1" className="form-label">Email</label>
+                    <label htmlFor="exampleInputPassword1" className="form-label">Email</label>
                     <input onChange={handleChange} type="email"  name='email' className="form-control" id="email" required/>
                 </div>
                 <div className="mb-3">
-                    <label for="exampleInputPassword1" className="form-label">Age</label>
+                    <label htmlFor="exampleInputPassword1" className="form-label">Age</label>
                     <input onChange={handleChange} type="age"  name='age' className="form-control" id="age" />
                 </div>
                 <div className="form-check">
                     <input className="form-check-input"  name='gender' type="checkbox" value="male" id="flexCheckDefault"/>
-                        <label className="form-check-label" for="flexCheckDefault">
+                        <label className="form-check-label" htmlFor="flexCheckDefault">
                             Male
                         </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input"  name='gender' type="checkbox" value="" id="female" checked/>
-                        <label className="form-check-label" for="flexCheckChecked">
+                    <input className="form-check-input"  name='gender' type="checkbox" value="female" id="female" checked/>
+                        <label className="form-check-label" htmlFor="flexCheckChecked">
                             Female
                         </label>
                 </div>
