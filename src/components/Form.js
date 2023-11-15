@@ -10,7 +10,6 @@ const Form = () => {
     
     const handleChange = (e)=>{
         setUsers({...users, [e.target.name]: e.target.value})
-        console.log(users);
     }
     const handleSubmit = (e)=>{
         e.preventDefault()
@@ -41,7 +40,7 @@ const Form = () => {
                         </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input"  name='gender' type="checkbox" value="female" id="female" checked/>
+                    <input className="form-check-input"  name='gender' type="checkbox" value="female" id="female"/>
                         <label className="form-check-label" htmlFor="flexCheckChecked">
                             Female
                         </label>

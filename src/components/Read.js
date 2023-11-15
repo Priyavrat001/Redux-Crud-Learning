@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 const Read = () => {
     const dispatch = useDispatch()
     const [id, setId] = useState()
-    const [showPopUp, setshowPopUp] = useState(false)
+    const [pop, setPop] = useState(false)
     const { users, loading } = useSelector((state) => state.app)
 
     useEffect(() => {
@@ -18,16 +18,16 @@ const Read = () => {
     }
     return (
         <>
-        {showPopUp && <CustomModal id={id} showPopUp={showPopUp} setshowPopUp={setshowPopUp}/>}
+        {pop && <CustomModal id={id} pop={pop} setPop={setPop}/>}
             <h2 className='my-3 text-center'>All data</h2>
             <div>
-                {users && users.map((e)=>(<div className="card w-50 mx-auto text-center my-2" style={{width: "18rem" }}>
-                        <div key={e.id} className="card-body">
+                {users && users.map((e)=>(<div key={e.id} className="card w-50 mx-auto text-center my-2" style={{width: "18rem" }}>
+                        <div className="card-body">
                             <h5 className="card-title text-center">{e.name}</h5>
                             <h6 className="card-subtitle mb-2 text-body-secondary text-center">{e.email}</h6>
                             <p className="card-text">{e.age}</p>
-                            <button onClick={()=>[setId(e.id), setshowPopUp(true)]} href="#" className="card-link">view</button>
-                            <Link  className="card-link">edit</Link>
+                            <button onClick={()=>[setId(e.id), setPop(true)]} href="#" className="card-link">view</button>
+                            <Link to={`/edit/${e.id}`} className="card-link">edit</Link>
                             <Link onClick={()=> dispatch(deleteUser(e.id))} className="card-link">delete</Link>
                         </div>
                  
