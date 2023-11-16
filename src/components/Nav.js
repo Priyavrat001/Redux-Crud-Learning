@@ -1,11 +1,22 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { searchUser } from '../features/userDatailsSlice'
 
 const Nav = () => {
+  const dispatch = useDispatch()
+  const [search, setSearch] = useState("")
   const allUsers = useSelector((state)=>{
     return state.app.users
   })
+  const handleChange = (e)=>{
+    setSearch(e.target.value)
+  }
+  useEffect(() => {
+   dispatch(searchUser(search))
+  }, [search])
+  console.log(search)
+  
   return (
     <>
 <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -25,7 +36,7 @@ const Nav = () => {
       </ul>
       <form className="d-flex" role="search">
         <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success" type="submit">Search</button>
+        <button className="btn btn-outline-success" type="submit" onChange={handleChange}>Search</button>
       </form>
     </div>
   </div>

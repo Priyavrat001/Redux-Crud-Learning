@@ -1,60 +1,99 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import {updateUser} from "../features/userDatailsSlice"
 
 const Update = () => {
-    // const [users, setUsers] = useState({})
-    const {id } = useParams();
-    const {users, loading} = useSelector((state)=> state.app);
-    const [newData, setNewData] = useState()
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    
-    const handleChange = (e)=>{
-        
+  const [updateData, setUpdateData] = useState();
+
+  const { users, loading } = useSelector((state) => state.app);
+
+  useEffect(() => {
+    if (id) {
+      const singleUser = users.filter((ele) => ele.id === id);
+      setUpdateData(singleUser[0]);
     }
-    const handleSubmit = (e)=>{
-        e.preventDefault()
-    }
-    useEffect(() => {
-    if(id){
-        const singleUser = users.filter((e)=> e.id === id);
-        setNewData(singleUser)
-    }
-    }, [])
-    console.log(newData)
+  }, []);
+
+  const newData = (e) => {
+    setUpdateData({ ...updateData, [e.target.name]: e.target.value });
+  };
+
+  console.log("updated data", updateData);
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    dispatch(updateUser(updateData));
+    navigate("/read");
+  };
+
   return (
-    <>
-     <form className='w-50 mx-auto bg-gray' onSubmit={handleSubmit}>
-            <h2 className='my-5'>Edit the data</h2>
-                <div className="mb-3">
-                    <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
-                    <input onChange={handleChange} type="name"  name='name' className="form-control" id="name" aria-describedby="emailHelp" value={newData}/>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="exampleInputPassword1" className="form-label">Email</label>
-                    <input onChange={handleChange} type="email"  name='email' className="form-control" id="email" value={newData} required/>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="exampleInputPassword1" className="form-label">Age</label>
-                    <input onChange={handleChange} type="age"  name='age' className="form-control" id="age" value={newData}/>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input"  name='gender' type="checkbox" value="male" id="flexCheckDefault"
-                    checked={newData[0].gender === "Male"}/>
-                        <label className="form-check-label" htmlFor="flexCheckDefault">
-                            Male
-                        </label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input"  name='gender' type="checkbox" value="female" id="female" checked={newData[0].gender === "Female"}/>
-                        <label className="form-check-label" htmlFor="flexCheckChecked">
-                            Female
-                        </label>
-                </div>
-                <button type="submit" className="btn btn-primary d-flex m-auto">Submit</button>
-            </form>
-    </>
-  )
-}
+    <div>
+      <h2 className="my-2">Edit the data</h2>
+      <form className="w-50 mx-auto my-5" onSubmit={handleUpdate}>
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            value={updateData && updateData.name}
+            onChange={newData}
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            value={updateData && updateData.email}
+            onChange={newData}
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Age</label>
+          <input
+            type="text"
+            name="age"
+            class="form-control"
+            value={updateData && updateData.age}
+            onChange={newData}
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            class="form-check-input"
+            name="gender"
+            value="Male"
+            type="radio"
+            checked={updateData && updateData.gender === "Male"}
+            onChange={newData}
+          />
+          <label class="form-check-label">Male</label>
+        </div>
+        <div class="mb-3">
+          <input
+            class="form-check-input"
+            name="gender"
+            value="Female"
+            type="radio"
+            checked={updateData && updateData.gender === "Female"}
+            onChange={newData}
+          />
+          <label class="form-check-label">Female</label>
+        </div>
 
-export default Update
+        <button type="submit" class="btn btn-primary">
+          Submit
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default Update;
