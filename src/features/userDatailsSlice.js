@@ -65,13 +65,15 @@ export const userDatial = createSlice({
         users: [],
         loading: false,
         error: null,
-        searchUser: [],
+        searchData: [],
     },
-    reducers : {
-        searchUser: (state, action)=>{
-            state.search = action.payload;
-        }
-    },
+ 
+    reducers: {
+        searchUser: (state, action) => {
+          console.log(action.payload);
+          state.searchData = action.payload;
+        },
+      },
         extraReducers:{
             [createUser.pending]: (state)=>{
                 state.loading = true;

@@ -8,7 +8,7 @@ const Read = () => {
     const dispatch = useDispatch()
     const [id, setId] = useState()
     const [pop, setPop] = useState(false)
-    const { users, loading } = useSelector((state) => state.app)
+    const { users, loading, searchData } = useSelector((state) => state.app)
 
     useEffect(() => {
         dispatch(showUser())
@@ -21,7 +21,15 @@ const Read = () => {
         {pop && <CustomModal id={id} pop={pop} setPop={setPop}/>}
             <h2 className='my-3 text-center'>All data</h2>
             <div>
-                {users && users.map((e)=>(<div key={e.id} className="card w-50 mx-auto text-center my-2" style={{width: "18rem" }}>
+                {users &&
+                users.filter((e)=>{
+                    if(searchData.length === 0){
+                        return e 
+                    }
+                    else{
+                        return e.name.toLowerCase().includes(searchData.toLowerCase())
+                    }
+                }).map((e)=>(<div key={e.id} className="card w-50 mx-auto text-center my-2" style={{width: "18rem" }}>
                         <div className="card-body">
                             <h5 className="card-title text-center">{e.name}</h5>
                             <h6 className="card-subtitle mb-2 text-body-secondary text-center">{e.email}</h6>
