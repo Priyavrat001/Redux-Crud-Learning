@@ -1,9 +1,16 @@
+# Api
+I am using MOCKAPI for this project you can find your api over the mock api docs.
+
+# Tools
+
+In this project i am using redux-toolkit if you want to use this please head to the redux-toolkit web docs you can find the install process and how to use the redux-toolkit.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
-https://github.com/highhimanshu/crud-using-rtk-and-asyncthunk/blob/main/src/components/Navbar.jsx
+
 
 In the project directory, you can run:
 
